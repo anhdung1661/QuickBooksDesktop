@@ -1,0 +1,261 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2018 Magenest. All rights reserved.
+ * See COPYING.txt for license details.
+ *
+ * Magenest_QuickBooksDesktop extension
+ * NOTICE OF LICENSE
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="magenest" translate="label" sortOrder="200">
+            <label>Magenest</label>
+        </tab>
+        <section id="qbdesktop" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>QuickBooks Desktop</label>
+            <tab>magenest</tab>
+            <resource>Magenest_QuickBooksDesktop::config_qbdesktop</resource>
+            <group id="qbd_version" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <frontend_model>Magenest\QuickBooksDesktop\Block\System\Config\Form\Field\Version</frontend_model>
+            </group>
+
+            <group id="qbd_setting" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Connection Settings</label>
+                <field id="company" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <frontend_model>Magenest\QuickBooksDesktop\Block\System\Config\Connection</frontend_model>
+                </field>
+                <field id="quickbook_version" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>QuickBooks Desktop Version</label>
+                    <source_model>Magenest\QuickBooksDesktop\Model\Config\Source\Version</source_model>
+                    <frontend_model>Magenest\QuickBooksDesktop\Block\System\Config\QBVersion</frontend_model>
+                </field>
+                <field id="quickbook_company" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Company</label>
+                    <source_model>Magenest\QuickBooksDesktop\Model\Config\Source\Company</source_model>
+                    <backend_model>Magenest\QuickBooksDesktop\Model\Config\Backend\Company</backend_model>
+                </field>
+                <field id="user_name" translate="label" type="select" sortOrder="30" showInDefault="1" showInStore="1">
+                    <label>User Name</label>
+                    <tooltip><![CDATA[This account use to connect between Web connector with Magento 2.]]></tooltip>
+                    <source_model>Magenest\QuickBooksDesktop\Model\Config\Source\Templates</source_model>
+                </field>
+                <field id="auto_run_every_min" translate="label" type="text" sortOrder="40" showInDefault="1" showInStore="1">
+                    <label>Auto run application every min</label>
+                    <tooltip><![CDATA[Public send request in minutes. If field is empty default value 100 will be saved.]]></tooltip>
+                    <validate>validate-digits validate-digits-range digits-range-1-10000</validate>
+                </field>
+                <field id="query_company" type="button" translate="button_label" sortOrder="100" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <frontend_model>Magenest\QuickBooksDesktop\Block\System\Config\Form\Field\Export\QWCCompany</frontend_model>
+                    <tooltip><![CDATA[Connect to your current QuickBooks Company]]></tooltip>
+                </field>
+
+            </group>
+
+            <group id="qbd_mapping_settings" translate="label" type="text" sortOrder="30" showInDefault="1"
+                   showInWebsite="1" showInStore="1">
+                <label>Mapping/Query Settings</label>
+<!--                <group id="qbd_query_account" translate="label" type="text" sortOrder="10" showInDefault="1"-->
+<!--                       showInWebsite="1" showInStore="1">-->
+<!--                    <label>Query Account</label>-->
+<!--                    <field id="number_account" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1"-->
+<!--                           showInStore="1">-->
+<!--                        <label>Number of Account in QuickBooks Desktop</label>-->
+<!--                    </field>-->
+<!--                    <field id="export_account" type="button" translate="button_label" sortOrder="110" showInDefault="1" showInWebsite="0" showInStore="0">-->
+<!--                        <frontend_model>Magenest\QuickBooksDesktop\Block\System\Config\Form\Field\Export\QWCQueryAccount</frontend_model>-->
+<!--                        <tooltip><![CDATA[Query account from QuickBooks to setup account for synchronize product.]]></tooltip>-->
+<!--                    </field>-->
+<!--                </group>-->
+
+                <group id="qbd_mapping_tax" translate="label" type="text" sortOrder="20" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Mapping Tax</label>
+                    <field id="export_map" type="button" translate="button_label" sortOrder="110" showInDefault="1" showInWebsite="0" showInStore="0">
+                        <frontend_model>Magenest\QuickBooksDesktop\Block\System\Config\Form\Field\Export\QWCMappingTax</frontend_model>
+                        <tooltip><![CDATA[Mapping the taxes from QuickBooks, Go to the menu Mapping Tax Codes after the process is done.]]></tooltip>
+                    </field>
+                </group>
+            </group>
+
+            <group id="qbd_synchronize_settings" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Synchronize Settings</label>
+
+                <group id="qbd_synchronize_customer" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Synchronize Customer</label>
+                    <field id="date_customer" translate="label" type="date" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Customer synchronization date from</label>
+                        <frontend_model>Magenest\QuickBooksDesktop\Block\System\Config\Form\Field\Date</frontend_model>
+                    </field>
+                    <field id="insert_id_to_lastname" translate="label" type="select" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Auto insert id to customer name</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    </field>
+                </group>
+
+                <group id="qbd_synchronize_product" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Synchronize Product</label>
+                    <field id="date_product" translate="label" type="date" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Product synchronization date from</label>
+                        <frontend_model>Magenest\QuickBooksDesktop\Block\System\Config\Form\Field\Date</frontend_model>
+                    </field>
+
+                    <field id="income" translate="label" type="text" sortOrder="20" showInDefault="1" showInStore="1">
+                        <frontend_model>Magenest\QuickBooksDesktop\Block\System\Config\Form\Field\Disable</frontend_model>
+                        <label>Income Account</label>
+                        <validate>required-entry</validate>
+                    </field>
+                    <field id="other_income" translate="label" type="text" sortOrder="20" showInDefault="1" showInStore="1">
+                        <frontend_model>Magenest\QuickBooksDesktop\Block\System\Config\Form\Field\Disable</frontend_model>
+                        <label>Other Income Account</label>
+                        <validate>required-entry</validate>
+                    </field>
+                    <field id="discount_income" translate="label" type="text" sortOrder="20" showInDefault="1" showInStore="1">
+                        <frontend_model>Magenest\QuickBooksDesktop\Block\System\Config\Form\Field\Disable</frontend_model>
+                        <label>Discount Income Account</label>
+                        <validate>required-entry</validate>
+                    </field>
+                    <field id="expense" translate="label" type="text" sortOrder="30" showInDefault="1" showInStore="1">
+                        <frontend_model>Magenest\QuickBooksDesktop\Block\System\Config\Form\Field\Disable</frontend_model>
+                        <label>Account for Non-Inventory Item</label>
+                        <validate>required-entry</validate>
+                    </field>
+                    <field id="cogs" translate="label" type="text" sortOrder="30" showInDefault="1" showInStore="1">
+                        <frontend_model>Magenest\QuickBooksDesktop\Block\System\Config\Form\Field\Disable</frontend_model>
+                        <label>Cost of Goods Sold Account</label>
+                        <validate>required-entry</validate>
+                    </field>
+
+                    <field id="asset" translate="label" type="text" sortOrder="40" showInDefault="1" showInStore="1">
+                        <frontend_model>Magenest\QuickBooksDesktop\Block\System\Config\Form\Field\Disable</frontend_model>
+                        <label>Asset Account</label>
+                        <validate>required-entry</validate>
+                    </field>
+                </group>
+
+                <group id="qbd_sales_settings" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Sales Settings</label>
+
+                    <field id="discount_item_name" translate="label" type="text" sortOrder="20" showInDefault="1" showInStore="1">
+                        <label>Discount Item Name</label>
+                        <validate>required-entry</validate>
+                    </field>
+                    <field id="shipping_item_name" translate="label" type="text" sortOrder="20" showInDefault="1" showInStore="1">
+                        <label>Shipping Item Name</label>
+                        <validate>required-entry</validate>
+                    </field>
+                    <field id="adjustment_item_name" translate="label" type="text" sortOrder="20" showInDefault="1" showInStore="1">
+                        <label>Adjustment Item Name</label>
+                        <validate>required-entry</validate>
+                    </field>
+                </group>
+
+                <group id="qbd_synchronize_order" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Synchronize Order</label>
+                    <field id="enable_sync_order" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Allow Sync Order</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    </field>
+                    <field id="date_sales_order" translate="label" type="date" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Sales Order synchronization date from</label>
+                        <frontend_model>Magenest\QuickBooksDesktop\Block\System\Config\Form\Field\Date</frontend_model>
+                        <comment><![CDATA[This feature applies only to data currently available on Quickbooks. Any new orders are automatically added to the Queues table.]]></comment>
+                        <depends>
+                            <field id="enable_sync_order">1</field>
+                        </depends>
+                    </field>
+                    <field id="amazon_representative" translate="label" type="text" sortOrder="80" showInDefault="1" showInWebsite="0" showInStore="0">
+                        <label>Amazon Sales Representative Name</label>
+                        <validate>required-entry validate-length maximum-length-5</validate>
+                    </field>
+                    <field id="amazon_customer_group_map" translate="label" type="select" sortOrder="85" showInDefault="1" showInWebsite="0" showInStore="0">
+                        <label>Amazon Sales Representative Customer Group</label>
+                        <source_model>Magenest\QuickBooksDesktop\Model\Config\Source\CustomerGroup</source_model>
+                        <validate>required-entry</validate>
+                    </field>
+                    <field id="zoro_representative" translate="label" type="text" sortOrder="90" showInDefault="1" showInWebsite="0" showInStore="0">
+                        <label>Zoro Sales Representative Name</label>
+                        <validate>required-entry validate-length maximum-length-5</validate>
+                    </field>
+                    <field id="zoro_customer_group_map" translate="label" type="select" sortOrder="100" showInDefault="1" showInWebsite="0" showInStore="0">
+                        <label>Zoro Sales Representative Customer Group</label>
+                        <source_model>Magenest\QuickBooksDesktop\Model\Config\Source\CustomerGroup</source_model>
+                        <validate>required-entry</validate>
+                    </field>
+                    <field id="ebay_representative" translate="label" type="text" sortOrder="110" showInDefault="1" showInWebsite="0" showInStore="0">
+                        <label>Ebay Sales Representative Name</label>
+                        <validate>required-entry validate-length maximum-length-5</validate>
+                    </field>
+                    <field id="ebay_customer_group_map" translate="label" type="select" sortOrder="120" showInDefault="1" showInWebsite="0" showInStore="0">
+                        <label>Ebay Sales Representative Customer Group</label>
+                        <source_model>Magenest\QuickBooksDesktop\Model\Config\Source\CustomerGroup</source_model>
+                        <validate>required-entry</validate>
+                    </field>
+                    <field id="walmart_representative" translate="label" type="text" sortOrder="130" showInDefault="1" showInWebsite="0" showInStore="0">
+                        <label>Walmart Sales Representative Name</label>
+                        <validate>required-entry validate-length maximum-length-5</validate>
+                    </field>
+                    <field id="walmart_customer_group_map" translate="label" type="select" sortOrder="140" showInDefault="1" showInWebsite="0" showInStore="0">
+                        <label>Walmart Sales Representative Customer Group</label>
+                        <source_model>Magenest\QuickBooksDesktop\Model\Config\Source\CustomerGroup</source_model>
+                        <validate>required-entry</validate>
+                    </field>
+                </group>
+
+                <group id="qbd_synchronize_invoice" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Synchronize Invoice</label>
+                    <field id="enable_sync_invoice" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Allow Sync Invoice</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    </field>
+                    <field id="date_invoice" translate="label" type="date" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Invoice synchronization date from</label>
+                        <frontend_model>Magenest\QuickBooksDesktop\Block\System\Config\Form\Field\Date</frontend_model>
+                        <comment><![CDATA[This feature applies only to data currently available on Quickbooks. Any new invoices are automatically added to the Queues table.]]></comment>
+                        <depends>
+                            <field id="enable_sync_invoice">1</field>
+                        </depends>
+                    </field>
+                </group>
+
+                <group id="qbd_synchronize_credit_memo" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Synchronize Credit Memo</label>
+                    <field id="enable_sync_credit_memo" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Allow Sync Credit Memo</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    </field>
+                    <field id="date_credit_memo" translate="label" type="date" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Credit Memo synchronization date from</label>
+                        <frontend_model>Magenest\QuickBooksDesktop\Block\System\Config\Form\Field\Date</frontend_model>
+                        <comment><![CDATA[This feature applies only to data currently available on Quickbooks. Any new credit memos are automatically added to the Queues table.]]></comment>
+                        <depends>
+                            <field id="enable_sync_credit_memo">1</field>
+                        </depends>
+                    </field>
+                </group>
+
+                <field id="max_record_per_request" translate="label" type="text" sortOrder="40" showInDefault="1" showInStore="1">
+                    <label>Max records per Request</label>
+                    <tooltip><![CDATA[The number of records in each request sent to Quickbooks.]]></tooltip>
+                    <validate>validate-digits validate-digits-range digits-range-1-10000</validate>
+                </field>
+
+                <field id="query_sync" type="button" translate="button_label" sortOrder="120" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <frontend_model>Magenest\QuickBooksDesktop\Block\System\Config\Form\Field\Export\QWCSync</frontend_model>
+                    <tooltip><![CDATA[Send data from your Magento site to QuickBooks by queues in Manage Queues menu.]]></tooltip>
+                </field>
+            </group>
+
+            <group id="qbd_debug_settings" translate="label" type="text" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Debug Setting</label>
+                <field id="enable_debug_mode" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Debug Mode</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <tooltip><![CDATA[If enable this configuration, all data interact with QuickBooks Web Connector will be recorded.]]></tooltip>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

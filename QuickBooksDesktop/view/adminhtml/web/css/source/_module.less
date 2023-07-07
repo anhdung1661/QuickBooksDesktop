@@ -1,0 +1,15 @@
+@magenest-icons-admin__font-name-path: 'Magenest_QuickBooksDesktop::fonts/icomoon';
+@magenest-icons-admin__font-name : 'Magenest';
+
+.lib-font-face(
+  @family-name: @magenest-icons-admin__font-name,
+  @font-path: @magenest-icons-admin__font-name-path,
+  @font-weight: normal,
+  @font-style: normal
+);
+
+.admin__menu .item-integration.parent.level-0 > a:before,
+.admin__menu .item-integration.level-0 > a:before {
+  font-family: @magenest-icons-admin__font-name;
+  content: "\e900";
+}

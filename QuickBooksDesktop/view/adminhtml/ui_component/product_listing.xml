@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <listingToolbar name="listing_top">
+        <massaction name="listing_massaction">
+            <action name="quickbooks_add_to_queue">
+                <settings>
+                    <confirm>
+                        <message translate="true">Are you sure to add selected items to Queue table?</message>
+                        <title translate="true">Add items to queue table</title>
+                    </confirm>
+                    <url path="qbdesktop/product/massAddProductToQueue"/>
+                    <type>quickbooks_add_to_queue</type>
+                    <label translate="true">Add to Queue</label>
+                </settings>
+            </action>
+        </massaction>
+    </listingToolbar>
+</listing>

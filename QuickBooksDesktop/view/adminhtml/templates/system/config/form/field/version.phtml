@@ -1,0 +1,50 @@
+<?php
+/**
+ * Copyright © 2019 Magenest. All rights reserved.
+ * @var \Magenest\QuickBooksDesktop\Block\System\Config\Form\Field\Version $block
+ */
+?>
+<div class="magenest-version-section">
+    <h1>
+        <a target="_blank" href="https://store.magenest.com/">QuickBooks Desktop</a>
+    </h1>
+
+    <div>
+        Support:
+        <a target="_blank" href="http://servicedesk.izysync.com/servicedesk/customer/portal/33"><?= __('Submit a ticket') ?></a>
+        <br>
+        Contact us:
+        <a target="_blank" href="mailto:support@magenest.com"><?= __('support@magenest.com') ?></a>
+    </div>
+    <div class="user-guide">
+        To configure this extension, please read our <a target="_blank" href="https://confluence.izysync.com/display/DOC/2.+QuickBooks+Desktop+Integration+User+Guide">User Guide</a>
+    </div>
+    <div class="logger">
+        For us to better diagnose your site, please enable debug mode and send us this <?= file_exists($block->getDebugFilePath()) ? '<a href="' . $block->getDownloadDebugUrl() .'">file</a>' : 'file' ?> along with your support request
+    </div>
+    <div class="version">
+        ver. <?= $block->getVersion() ?>
+    </div>
+</div>
+
+<style>
+    .magenest-version-section{
+        background: #f8f8f8;
+        border: 1px solid #e3e3e3;
+        padding: 1.5rem;
+    }
+    .magenest-version-section h1{
+        font-weight: bold;
+    }
+    .magenest-version-section .version{
+        text-align: right;
+    }
+    .magenest-version-section a{
+        color: #eb5202;
+        text-decoration: none;
+    }
+    .magenest-version-section a:hover{
+        color: #eb5202;
+        text-decoration: none;
+    }
+</style>

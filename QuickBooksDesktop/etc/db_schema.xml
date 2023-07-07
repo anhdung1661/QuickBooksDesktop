@@ -1,0 +1,294 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2020 Magenest. All rights reserved.
+ * See COPYING.txt for license details.
+ *
+ * Magenest_QuickBooksDesktop extension
+ * NOTICE OF LICENSE
+ *
+ * @category Magenest
+ * @package Magenest_QuickBooksDesktop
+ */
+-->
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="magenest_qbd__company" resource="default" engine="innodb" comment="List companies connected">
+        <column xsi:type="int" name="company_id" padding="11" unsigned="false" nullable="false" identity="true" comment="Company ID"/>
+        <column xsi:type="varchar" name="company_name" nullable="false" length="255" comment="Company name"/>
+        <column xsi:type="smallint" name="status" nullable="false" padding="4" comment="Connect or Disconnect"/>
+        <column xsi:type="varchar" name="note" nullable="true" length="255" comment="Note"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="company_id"/>
+        </constraint>
+        <constraint xsi:type="unique" referenceId="COMPANY_NAME">
+            <column name="company_name"/>
+        </constraint>
+    </table>
+
+    <table name="magenest_qbd__user" resource="default" engine="innodb" comment="Users use to connect to Web connector">
+        <column xsi:type="int" name="user_id" padding="11" unsigned="false" nullable="false" identity="true" comment="Entity ID"/>
+        <column xsi:type="varchar" name="username" nullable="false" length="255" comment="User name"/>
+        <column xsi:type="varchar" name="password" nullable="false" length="255" comment="Password"/>
+        <column xsi:type="smallint" name="status" nullable="false" padding="4" comment="Active or Inactive"/>
+        <column xsi:type="varchar" name="note" nullable="true" length="255" comment="Note"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="user_id"/>
+        </constraint>
+        <constraint xsi:type="unique" referenceId="USER_NAME">
+            <column name="username"/>
+        </constraint>
+    </table>
+
+    <table name="magenest_qbd__session_connect" resource="default" engine="innodb" comment="Store all session connect to Web connector">
+        <column xsi:type="int" name="id" padding="11" unsigned="false" nullable="false" identity="true" comment="Entity ID"/>
+        <column xsi:type="varchar" name="username" nullable="false" length="255" comment="User name"/>
+        <column xsi:type="varchar" name="session_token" nullable="false" length="255" comment="Session token"/>
+        <column xsi:type="int" name="total" nullable="false" padding="11" comment="All of requests in this session"/>
+        <column xsi:type="int" name="processed" nullable="false" padding="11" default="0" comment="Number of requests processed"/>
+        <column xsi:type="varchar" name="iterator_id" nullable="true" length="255" comment="Iterator of session"/>
+        <column xsi:type="varchar" name="lasterror_msg" nullable="true" length="255" comment="Message error"/>
+        <column name="created_at" xsi:type="timestamp" on_update="false" nullable="false" default="CURRENT_TIMESTAMP" comment="Created Time" />
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="id"/>
+        </constraint>
+    </table>
+
+    <table name="magenest_qbd__taxes" resource="default" engine="innodb" comment="Quickbooks Tax information">
+        <column xsi:type="int" name="id" padding="11" unsigned="false" nullable="false" identity="true" comment="ID"/>
+        <column xsi:type="smallint" name="company_id" padding="5" unsigned="true" nullable="false" default="0" comment="Company ID"/>
+        <column xsi:type="varchar" name="tax_code" nullable="false" length="255" comment="Quickbooks tax code"/>
+        <column xsi:type="varchar" name="tax_value" nullable="false" length="255" comment="Quickbooks tax value"/>
+        <column xsi:type="varchar" name="list_id" nullable="false" length="255" comment="List ID of Quickbooks Tax"/>
+        <column xsi:type="varchar" name="edit_sequence" nullable="false" length="255" comment="Edit sequence"/>
+        <column xsi:type="varchar" name="note" nullable="true" length="255" comment="Note"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="id"/>
+        </constraint>
+        <constraint xsi:type="unique" referenceId="TAX_COMPANY">
+            <column name="company_id"/>
+            <column name="tax_code"/>
+        </constraint>
+    </table>
+    <table name="magenest_qbd__taxes_mapping" resource="default" engine="innodb" comment="Mapping tax between Quickbooks and Magento">
+        <column xsi:type="int" name="id" padding="11" unsigned="false" nullable="false" identity="true" comment="ID"/>
+        <column xsi:type="int" name="magento_tax_id" padding="11" unsigned="false" nullable="false" default="0" comment="Magento tax id"/>
+        <column xsi:type="int" name="qb_tax_id" padding="11" unsigned="false" nullable="false" default="0" comment="ID of magenest_qbd_taxes table"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="id"/>
+        </constraint>
+<!--        <constraint xsi:type="unique" referenceId="TAX_COMPANY">-->
+<!--            <column name="magento_tax_id"/>-->
+<!--            <column name="qb_tax_id"/>-->
+<!--        </constraint>-->
+        <constraint xsi:type="foreign" referenceId="TAX_MAPPING" table="magenest_qbd__taxes_mapping" column="qb_tax_id"
+                    referenceTable="magenest_qbd__taxes" referenceColumn="id" onDelete="NO ACTION"/>
+    </table>
+
+    <table name="magenest_qbd__shipping_method" resource="default" engine="innodb" comment="Quickbooks Shipping method information">
+        <column xsi:type="int" name="id" padding="11" unsigned="false" nullable="false" identity="true" comment="ID"/>
+        <column xsi:type="smallint" name="company_id" padding="11" unsigned="true" nullable="false" default="0" comment="Company ID"/>
+        <column xsi:type="varchar" name="shipping_id" nullable="false" length="255" comment="Shipping method code"/>
+        <column xsi:type="varchar" name="list_id" nullable="false" length="255" comment="List ID of Quickbooks Ship method"/>
+        <column xsi:type="varchar" name="edit_sequence" nullable="false" length="255" comment="Edit sequence"/>
+        <column xsi:type="varchar" name="note" nullable="true" length="255" comment="Note"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="id"/>
+        </constraint>
+        <constraint xsi:type="unique" referenceId="TAX_COMPANY">
+            <column name="company_id"/>
+            <column name="shipping_id"/>
+        </constraint>
+    </table>
+
+    <table name="magenest_qbd__payment_method" resource="default" engine="innodb" comment="Quickbooks Payment method information">
+        <column xsi:type="int" name="id" padding="11" unsigned="false" nullable="false" identity="true" comment="ID"/>
+        <column xsi:type="smallint" name="company_id" padding="11" unsigned="true" nullable="false" default="0" comment="Company ID"/>
+        <column xsi:type="varchar" name="payment_method" nullable="false" length="255" comment="Payment method code"/>
+        <column xsi:type="varchar" name="list_id" nullable="false" length="255" comment="List ID of Quickbooks Payment method"/>
+        <column xsi:type="varchar" name="edit_sequence" nullable="false" length="255" comment="Edit sequence"/>
+        <column xsi:type="varchar" name="note" nullable="true" length="255" comment="Note"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="id"/>
+        </constraint>
+        <constraint xsi:type="unique" referenceId="TAX_COMPANY">
+            <column name="company_id"/>
+            <column name="payment_method"/>
+        </constraint>
+    </table>
+
+    <table name="magenest_qbd__customer" resource="default" engine="innodb" comment="Quickbooks Customer information">
+        <column xsi:type="int" name="id" padding="11" unsigned="false" nullable="false" identity="true" comment="ID"/>
+        <column xsi:type="smallint" name="company_id" padding="11" unsigned="true" nullable="false" default="0" comment="Company ID"/>
+        <column xsi:type="varchar" name="customer_name" nullable="false" length="255" comment="Customer name"/>
+        <column xsi:type="varchar" name="email" nullable="true" length="255" comment="Customer email"/>
+        <column xsi:type="varchar" name="list_id" nullable="false" length="255" comment="List ID of Quickbooks Payment method"/>
+        <column xsi:type="varchar" name="edit_sequence" nullable="false" length="255" comment="Edit sequence"/>
+        <column xsi:type="varchar" name="note" nullable="true" length="255" comment="Note"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="id"/>
+        </constraint>
+        <constraint xsi:type="unique" referenceId="MAGENEST_QBD__CUSTOMER_COMPANY_ID_CUSTOMER_NAME">
+            <column name="company_id"/>
+            <column name="customer_name"/>
+        </constraint>
+    </table>
+    <table name="magenest_qbd__customer_mapping" resource="default" engine="innodb" comment="Mapping customer between Quickbooks and Magento">
+        <column xsi:type="int" name="id" padding="11" unsigned="false" nullable="false" identity="true" comment="ID"/>
+        <column xsi:type="int" name="m2_customer_id" padding="11" unsigned="false" nullable="false" default="0" comment="Magento customer id"/>
+        <column xsi:type="int" name="qb_customer_id" padding="11" unsigned="false" nullable="false" default="0" comment="ID of magenest_qbd_customer table"/>
+        <column xsi:type="smallint" name="type" padding="2" unsigned="false" nullable="false" default="3" comment="Guest or Customer"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="id"/>
+        </constraint>
+        <constraint xsi:type="unique" referenceId="TAX_COMPANY">
+            <column name="m2_customer_id"/>
+            <column name="qb_customer_id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="TAX_MAPPING" table="magenest_qbd__customer_mapping" column="qb_customer_id"
+                    referenceTable="magenest_qbd__customer" referenceColumn="id" onDelete="CASCADE"/>
+    </table>
+
+    <table name="magenest_qbd__item" resource="default" engine="innodb" comment="Quickbooks Item information">
+        <column xsi:type="int" name="id" padding="11" unsigned="false" nullable="false" identity="true" comment="ID"/>
+        <column xsi:type="smallint" name="company_id" padding="11" unsigned="true" nullable="false" default="0" comment="Company ID"/>
+        <column xsi:type="varchar" name="item_name" nullable="false" length="255" comment="Item name"/>
+        <column xsi:type="smallint" name="item_type" nullable="false" padding="4" comment="Inventory item, non-inventory item ..."/>
+        <column xsi:type="varchar" name="list_id" nullable="false" length="255" comment="List ID of Quickbooks Payment method"/>
+        <column xsi:type="varchar" name="edit_sequence" nullable="false" length="255" comment="Edit sequence"/>
+        <column xsi:type="varchar" name="note" nullable="true" length="255" comment="Note"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="id"/>
+        </constraint>
+        <constraint xsi:type="unique" referenceId="MAGENEST_QBD__ITEM_COMPANY_ID_ITEM_NAME">
+            <column name="company_id"/>
+            <column name="item_name"/>
+        </constraint>
+    </table>
+    <table name="magenest_qbd__item_mapping" resource="default" engine="innodb" comment="Mapping product between Quickbooks and Magento">
+        <column xsi:type="int" name="id" padding="11" unsigned="false" nullable="false" identity="true" comment="ID"/>
+        <column xsi:type="int" name="m2_product_id" padding="11" unsigned="false" nullable="false" default="0" comment="Magento product id"/>
+        <column xsi:type="int" name="qb_item_id" padding="11" unsigned="false" nullable="false" default="0" comment="ID of magenest_qbd_item table"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="id"/>
+        </constraint>
+        <constraint xsi:type="unique" referenceId="TAX_COMPANY">
+            <column name="m2_product_id"/>
+            <column name="qb_item_id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="TAX_MAPPING" table="magenest_qbd__item_mapping" column="qb_item_id"
+                    referenceTable="magenest_qbd__item" referenceColumn="id" onDelete="CASCADE"/>
+    </table>
+
+    <table name="magenest_qbd__queue" resource="default" engine="innodb" comment="Items communicate between Magento and Web connector">
+        <column xsi:type="int" name="queue_id" padding="11" unsigned="false" nullable="false" identity="true" comment="Queue ID"/>
+        <column xsi:type="int" name="company_id" nullable="false" padding="11" comment="Company ID"/>
+
+        <column xsi:type="int" name="entity_id" nullable="false" padding="11" comment="Magento entity ID"/>
+        <column xsi:type="smallint" name="type" nullable="false" padding="4" comment="Magento entity type"/>
+        <column xsi:type="smallint" name="action" nullable="false" padding="4" comment="Add or Mod"/>
+        <column xsi:type="smallint" name="status" nullable="false" padding="4" comment="Queue, Success, Fail, Syncing, Blocked"/>
+        <column xsi:type="smallint" name="priority" nullable="false" padding="4" comment="depend on magento entity type"/>
+
+        <column name="enqueue_datetime" xsi:type="timestamp" on_update="false" nullable="false" default="CURRENT_TIMESTAMP" comment="Created Time" />
+        <column name="dequeue_datetime" xsi:type="timestamp" on_update="true" nullable="true" comment="Updated Time" />
+        <column xsi:type="varchar" name="msg" nullable="true" length="255" comment="Message error"/>
+
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="queue_id"/>
+        </constraint>
+        <constraint xsi:type="unique" referenceId="COMPANY_NAME">
+            <column name="company_id"/>
+            <column name="entity_id"/>
+            <column name="type"/>
+            <column name="action"/>
+        </constraint>
+    </table>
+
+    <table name="magenest_qbd__sales_order" resource="default" engine="innodb" comment="Sales Order Information">
+        <column xsi:type="int" name="id" padding="11" unsigned="false" nullable="false" identity="true" comment="ID"/>
+        <column xsi:type="smallint" name="company_id" padding="5" unsigned="true" nullable="false" identity="false" default="0" comment="Company ID"/>
+        <column xsi:type="varchar" name="magento_order_id" nullable="false" length="255" comment="Order entity_id on Magento"/>
+        <column xsi:type="varchar" name="list_id" nullable="false" length="255" comment="List ID of Item"/>
+        <column xsi:type="varchar" name="edit_sequence" nullable="false" length="255" comment="Txn Line ID of Order"/>
+        <column xsi:type="varchar" name="note" nullable="true" length="255" comment="Note"/>
+        <column name="created_at" xsi:type="timestamp" on_update="false" nullable="false" default="CURRENT_TIMESTAMP" comment="Created Time" />
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="id"/>
+        </constraint>
+        <constraint xsi:type="unique" referenceId="MAGENEST_QBD__SALES_ORDER_COMPANY_ID_MAGENTO_ORDER_ID">
+            <column name="company_id"/>
+            <column name="magento_order_id"/>
+        </constraint>
+        <index referenceId="SALES_ORDER_QUICKBOOKS_ID" indexType="btree">
+            <column name="list_id"/>
+        </index>
+    </table>
+    <table name="magenest_qbd__sales_order_line_items" resource="default" engine="innodb" comment="Line items information of Sales Order">
+        <column xsi:type="int" name="id" padding="11" unsigned="false" nullable="false" identity="true" comment="Line Item ID"/>
+        <column xsi:type="smallint" name="company_id" padding="5" unsigned="true" nullable="false" identity="false" default="0" comment="Company ID"/>
+        <column xsi:type="varchar" name="order_txn_id" nullable="false" length="255" comment="Txn ID of Order"/>
+        <column xsi:type="varchar" name="txn_line_id" nullable="false" length="255" comment="Txn Line ID of Order"/>
+        <column xsi:type="varchar" name="item_list_id" nullable="false" length="255" comment="List ID of Item"/>
+        <column xsi:type="varchar" name="sku" nullable="false" length="255" default="0" comment="Item SKU"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="id"/>
+        </constraint>
+<!--        <constraint xsi:type="foreign" referenceId="ORDER_TXN_ID" table="magenest_qbd__sales_order_line_items" column="order_txn_id" referenceTable="magenest_qbd__sales_order" referenceColumn="list_id" onDelete="CASCADE"/>-->
+<!--        <constraint xsi:type="unique" referenceId="MAGENEST_QBD__SALES_ORDER_LINE_ITEMS_COMPANY_ID_ORDER_TXN_ID_SKU">-->
+<!--            <column name="company_id"/>-->
+<!--            <column name="order_txn_id"/>-->
+<!--            <column name="sku"/>-->
+<!--        </constraint>-->
+    </table>
+
+    <table name="magenest_qbd__invoice" resource="default" engine="innodb" comment="Invoice Information">
+        <column xsi:type="int" name="id" padding="11" unsigned="false" nullable="false" identity="true" comment="ID"/>
+        <column xsi:type="smallint" name="company_id" padding="5" unsigned="true" nullable="false" identity="false" default="0" comment="Company ID"/>
+        <column xsi:type="varchar" name="magento_invoice_id" nullable="false" length="255" comment="Invoice entity_id in Magento"/>
+        <column xsi:type="varchar" name="list_id" nullable="false" length="255" comment="List ID of Invoice in Quickbooks"/>
+        <column xsi:type="varchar" name="edit_sequence" nullable="false" length="255" comment="Edit sequence"/>
+        <column xsi:type="varchar" name="note" nullable="true" length="255" comment="Note"/>
+        <column name="created_at" xsi:type="timestamp" on_update="false" nullable="false" default="CURRENT_TIMESTAMP" comment="Created Time" />
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="id"/>
+        </constraint>
+        <constraint xsi:type="unique" referenceId="MAGENTO_QBD__INVOICE_COMPANY_ID_MAGENTO_INVOICE_ID">
+            <column name="company_id"/>
+            <column name="magento_invoice_id"/>
+        </constraint>
+    </table>
+
+    <table name="magenest_qbd__receive_payment" resource="default" engine="innodb" comment="Receive Payment Information">
+        <column xsi:type="int" name="id" padding="11" unsigned="false" nullable="false" identity="true" comment="ID"/>
+        <column xsi:type="smallint" name="company_id" padding="5" unsigned="true" nullable="false" identity="false" default="0" comment="Company ID"/>
+        <column xsi:type="varchar" name="magento_invoice_id" nullable="false" length="255" comment="Invoice entity_id in Magento"/>
+        <column xsi:type="varchar" name="list_id" nullable="false" length="255" comment="List ID of Receive Payment in Quickbooks"/>
+        <column xsi:type="varchar" name="edit_sequence" nullable="false" length="255" comment="Edit sequence"/>
+        <column xsi:type="varchar" name="note" nullable="true" length="255" comment="Note"/>
+        <column name="created_at" xsi:type="timestamp" on_update="false" nullable="false" default="CURRENT_TIMESTAMP" comment="Created Time" />
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="id"/>
+        </constraint>
+        <constraint xsi:type="unique" referenceId="MAGENEST_QBD__RECEIVE_PAYMENT_COMPANY_ID_MAGENTO_INVOICE_ID">
+            <column name="company_id"/>
+            <column name="magento_invoice_id"/>
+        </constraint>
+    </table>
+
+    <table name="magenest_qbd__credit_memo" resource="default" engine="innodb" comment="Credit Memo Information">
+        <column xsi:type="int" name="id" padding="11" unsigned="false" nullable="false" identity="true" comment="ID"/>
+        <column xsi:type="smallint" name="company_id" padding="5" unsigned="true" nullable="false" identity="false" default="0" comment="Company ID"/>
+        <column xsi:type="varchar" name="magento_credit_memo_id" nullable="false" length="255" comment="Credit memo entity_id in Magento"/>
+        <column xsi:type="varchar" name="list_id" nullable="false" length="255" comment="List ID of Credit memo in Quickbooks"/>
+        <column xsi:type="varchar" name="edit_sequence" nullable="false" length="255" comment="Edit sequence"/>
+        <column xsi:type="varchar" name="note" nullable="true" length="255" comment="Note"/>
+        <column name="created_at" xsi:type="timestamp" on_update="false" nullable="false" default="CURRENT_TIMESTAMP" comment="Created Time" />
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="id"/>
+        </constraint>
+        <constraint xsi:type="unique" referenceId="MAGENEST_QBD__CREDIT_MEMO_COMPANY_ID_MAGENTO_CREDIT_MEMO_ID">
+            <column name="company_id"/>
+            <column name="magento_credit_memo_id"/>
+        </constraint>
+    </table>
+</schema>

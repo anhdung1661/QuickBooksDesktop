@@ -1,0 +1,247 @@
+{
+    "magenest_qbd__company": {
+        "column": {
+            "company_id": true,
+            "company_name": true,
+            "status": true,
+            "note": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "MAGENEST_QBD__COMPANY_COMPANY_NAME": true
+        }
+    },
+    "magenest_qbd__user": {
+        "column": {
+            "user_id": true,
+            "username": true,
+            "password": true,
+            "status": true,
+            "note": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "MAGENEST_QBD__USER_USERNAME": true
+        }
+    },
+    "magenest_qbd__session_connect": {
+        "column": {
+            "id": true,
+            "username": true,
+            "session_token": true,
+            "total": true,
+            "processed": true,
+            "iterator_id": true,
+            "lasterror_msg": true,
+            "created_at": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    },
+    "magenest_qbd__taxes": {
+        "column": {
+            "id": true,
+            "company_id": true,
+            "tax_code": true,
+            "tax_value": true,
+            "list_id": true,
+            "edit_sequence": true,
+            "note": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "MAGENEST_QBD__TAXES_COMPANY_ID_TAX_CODE": true
+        }
+    },
+    "magenest_qbd__taxes_mapping": {
+        "column": {
+            "id": true,
+            "magento_tax_id": true,
+            "qb_tax_id": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "MAGENEST_QBD__TAXES_MAPPING_MAGENTO_TAX_ID_QB_TAX_ID": true,
+            "MAGENEST_QBD__TAXES_MAPPING_QB_TAX_ID_MAGENEST_QBD__TAXES_ID": true
+        }
+    },
+    "magenest_qbd__shipping_method": {
+        "column": {
+            "id": true,
+            "company_id": true,
+            "shipping_id": true,
+            "list_id": true,
+            "edit_sequence": true,
+            "note": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "MAGENEST_QBD__SHIPPING_METHOD_COMPANY_ID_SHIPPING_ID": true
+        }
+    },
+    "magenest_qbd__payment_method": {
+        "column": {
+            "id": true,
+            "company_id": true,
+            "payment_method": true,
+            "list_id": true,
+            "edit_sequence": true,
+            "note": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "MAGENEST_QBD__PAYMENT_METHOD_COMPANY_ID_PAYMENT_METHOD": true
+        }
+    },
+    "magenest_qbd__customer": {
+        "column": {
+            "id": true,
+            "company_id": true,
+            "customer_name": true,
+            "email": true,
+            "list_id": true,
+            "edit_sequence": true,
+            "note": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "MAGENEST_QBD__CUSTOMER_COMPANY_ID_CUSTOMER_NAME": true
+        }
+    },
+    "magenest_qbd__customer_mapping": {
+        "column": {
+            "id": true,
+            "m2_customer_id": true,
+            "qb_customer_id": true,
+            "type": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "MAGENEST_QBD__CUSTOMER_MAPPING_M2_CUSTOMER_ID_QB_CUSTOMER_ID": true,
+            "MAGENEST_QBD__CSTR_MAPPING_QB_CSTR_ID_MAGENEST_QBD__CSTR_ID": true
+        }
+    },
+    "magenest_qbd__item": {
+        "column": {
+            "id": true,
+            "company_id": true,
+            "item_name": true,
+            "item_type": true,
+            "list_id": true,
+            "edit_sequence": true,
+            "note": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "MAGENEST_QBD__ITEM_COMPANY_ID_ITEM_NAME": true
+        }
+    },
+    "magenest_qbd__item_mapping": {
+        "column": {
+            "id": true,
+            "m2_product_id": true,
+            "qb_item_id": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "MAGENEST_QBD__ITEM_MAPPING_M2_PRODUCT_ID_QB_ITEM_ID": true,
+            "MAGENEST_QBD__ITEM_MAPPING_QB_ITEM_ID_MAGENEST_QBD__ITEM_ID": true
+        }
+    },
+    "magenest_qbd__queue": {
+        "column": {
+            "queue_id": true,
+            "company_id": true,
+            "entity_id": true,
+            "type": true,
+            "action": true,
+            "status": true,
+            "priority": true,
+            "enqueue_datetime": true,
+            "dequeue_datetime": true,
+            "msg": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "MAGENEST_QBD__QUEUE_COMPANY_ID_ENTITY_ID_TYPE_ACTION": true
+        }
+    },
+    "magenest_qbd__sales_order": {
+        "column": {
+            "id": true,
+            "company_id": true,
+            "magento_order_id": true,
+            "list_id": true,
+            "edit_sequence": true,
+            "note": true,
+            "created_at": true
+        },
+        "index": {
+            "MAGENEST_QBD__SALES_ORDER_LIST_ID": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "MAGENEST_QBD__SALES_ORDER_COMPANY_ID_MAGENTO_ORDER_ID": true
+        }
+    },
+    "magenest_qbd__sales_order_line_items": {
+        "column": {
+            "id": true,
+            "company_id": true,
+            "order_txn_id": true,
+            "txn_line_id": true,
+            "item_list_id": true,
+            "sku": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "FK_C1E7AF61615200C1EB4435A1C7E791EF": true
+        }
+    },
+    "magenest_qbd__invoice": {
+        "column": {
+            "id": true,
+            "company_id": true,
+            "magento_invoice_id": true,
+            "list_id": true,
+            "edit_sequence": true,
+            "note": true,
+            "created_at": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "MAGENEST_QBD__INVOICE_COMPANY_ID_MAGENTO_INVOICE_ID": true
+        }
+    },
+    "magenest_qbd__receive_payment": {
+        "column": {
+            "id": true,
+            "company_id": true,
+            "magento_invoice_id": true,
+            "list_id": true,
+            "edit_sequence": true,
+            "note": true,
+            "created_at": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "MAGENEST_QBD__RECEIVE_PAYMENT_COMPANY_ID_MAGENTO_INVOICE_ID": true
+        }
+    },
+    "magenest_qbd__credit_memo": {
+        "column": {
+            "id": true,
+            "company_id": true,
+            "magento_credit_memo_id": true,
+            "list_id": true,
+            "edit_sequence": true,
+            "note": true,
+            "created_at": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "MAGENEST_QBD__CREDIT_MEMO_COMPANY_ID_MAGENTO_CREDIT_MEMO_ID": true
+        }
+    }
+}

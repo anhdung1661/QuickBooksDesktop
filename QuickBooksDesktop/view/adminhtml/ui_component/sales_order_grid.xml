@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <listingToolbar name="listing_top">
+        <massaction name="listing_massaction">
+            <action name="magenest_add_order_to_queue">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="type" xsi:type="string">magenest_add_order_to_queue</item>
+                        <item name="label" xsi:type="string" translate="true">Add Order(s) to Queue</item>
+                    </item>
+                </argument>
+                <argument name="actions" xsi:type="array">
+                    <item name="0" xsi:type="array">
+                        <item name="type" xsi:type="string">order_customer</item>
+                        <item name="label" xsi:type="string" translate="true">Both Order, Customer</item>
+                        <item name="url" xsi:type="url" path="qbdesktop/order/massAddOrderToQueue">
+                            <param name="actionType">1</param>
+                        </item>
+                        <item name="confirm" xsi:type="array">
+                            <item name="title" xsi:type="string" translate="true">Add Orders to queue</item>
+                            <item name="message" xsi:type="string" translate="true">Are you sure you want to add the selected orders to Queue?</item>
+                        </item>
+                    </item>
+                    <item name="1" xsi:type="array">
+                        <item name="type" xsi:type="string">only_order</item>
+                        <item name="label" xsi:type="string" translate="true">Only Order</item>
+                        <item name="url" xsi:type="url" path="qbdesktop/order/massAddOrderToQueue">
+                            <param name="actionType">2</param>
+                        </item>
+                    </item>
+                    <item name="2" xsi:type="array">
+                        <item name="type" xsi:type="string">only_customer</item>
+                        <item name="label" xsi:type="string" translate="true">Only Customer/Guest</item>
+                        <item name="url" xsi:type="url" path="qbdesktop/order/massAddOrderToQueue">
+                            <param name="actionType">3</param>
+                        </item>
+                    </item>
+                </argument>
+            </action>
+        </massaction>
+    </listingToolbar>
+</listing>

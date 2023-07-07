@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2018 Magenest. All rights reserved.
+ * See COPYING.txt for license details.
+ *
+ * Magenest_QuickBooksDesktop extension
+ * NOTICE OF LICENSE
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <qbdesktop>
+            <qbd_setting>
+                <auto_run_every_min>100</auto_run_every_min>
+            </qbd_setting>
+            <qbd_synchronize_settings>
+                <qbd_sales_settings>
+                    <discount_item_name>Discount</discount_item_name>
+                    <shipping_item_name>Shipping</shipping_item_name>
+                    <adjustment_item_name>Adjustment</adjustment_item_name>
+                </qbd_sales_settings>
+                <qbd_synchronize_order>
+                    <enable_sync_order>1</enable_sync_order>
+                </qbd_synchronize_order>
+                <qbd_synchronize_invoice>
+                    <enable_sync_invoice>1</enable_sync_invoice>
+                </qbd_synchronize_invoice>
+                <qbd_synchronize_credit_memo>
+                    <enable_sync_credit_memo>1</enable_sync_credit_memo>
+                </qbd_synchronize_credit_memo>
+            </qbd_synchronize_settings>
+        </qbdesktop>
+    </default>
+</config>

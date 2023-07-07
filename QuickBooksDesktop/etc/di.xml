@@ -1,0 +1,234 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2018 Magenest. All rights reserved.
+ * See COPYING.txt for license details.
+ *
+ * Magenest_QuickBooksDesktop extension
+ * NOTICE OF LICENSE
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <virtualType name="Magenest\QuickBooksDesktop\Model\ResourceModel\User\Grid\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">magenest_qbd__user</argument>
+            <argument name="resourceModel" xsi:type="string">Magenest\QuickBooksDesktop\Model\ResourceModel\User</argument>
+        </arguments>
+    </virtualType>
+
+    <type name="Magenest\QuickBooksDesktop\Model\ResourceModel\Queue\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">magenest_qbd__queue</argument>
+            <argument name="eventPrefix" xsi:type="string">magenest_qbd_queue_grid_collection</argument>
+            <argument name="eventObject" xsi:type="string">magenest_qbd_grid_collection</argument>
+            <argument name="resourceModel" xsi:type="string">Magenest\QuickBooksDesktop\Model\ResourceModel\Queue</argument>
+        </arguments>
+    </type>
+
+<!--    <virtualType name="Magenest\QuickBooksDesktop\Model\ResourceModel\SessionConnect\Grid\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">-->
+<!--        <arguments>-->
+<!--            <argument name="mainTable" xsi:type="string">magenest_qbd__ticket</argument>-->
+<!--            <argument name="resourceModel" xsi:type="string">-->
+<!--                Magenest\QuickBooksDesktop\Model\ResourceModel\SessionConnect-->
+<!--            </argument>-->
+<!--        </arguments>-->
+<!--    </virtualType>-->
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="quickbooksdesktop_user_listing_data_source" xsi:type="string">Magenest\QuickBooksDesktop\Model\ResourceModel\User\Grid\Collection</item>
+                <item name="quickbooksdesktop_queue_listing_data_source" xsi:type="string">Magenest\QuickBooksDesktop\Model\ResourceModel\Queue\Grid\Collection</item>
+                <item name="quickbooksdesktop_ticket_listing_data_source" xsi:type="string">Magenest\QuickBooksDesktop\Model\ResourceModel\SessionConnect\Grid\Collection</item>
+                <item name="quickbooksdesktop_customer_listing_data_source" xsi:type="string">Magenest\QuickBooksDesktop\Model\ResourceModel\Customer\Grid\Collection</item>
+                <item name="quickbooksdesktop_product_listing_data_source" xsi:type="string">Magenest\QuickBooksDesktop\Model\ResourceModel\Product\Grid\Collection</item>
+                <item name="quickbooksdesktop_price_level_list_listing_data_source" xsi:type="string">Magenest\QuickBooksDesktop\Model\ResourceModel\Price\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Magento\Framework\App\Request\CsrfValidator">
+        <plugin name="check-exception-connect" type="Magenest\QuickBooksDesktop\Plugin\Request\CsrfValidator" sortOrder="1" />
+    </type>
+
+    <type name="Magenest\QuickBooksDesktop\Helper\QuickbooksDebug">
+        <arguments>
+            <argument name="filesystem" xsi:type="object">Magento\Framework\Filesystem\Driver\File</argument>
+        </arguments>
+    </type>
+
+    <type name="Magenest\QuickBooksDesktop\Helper\QuickbooksLogger">
+        <arguments>
+            <argument name="name" xsi:type="string">QuickbooksLogger</argument>
+            <argument name="handlers"  xsi:type="array">
+                <item name="system" xsi:type="object">Magenest\QuickBooksDesktop\Helper\QuickbooksDebug</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Magento\Framework\Console\CommandListInterface">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="qbd_insert_product" xsi:type="object">Magenest\QuickBooksDesktop\Console\Command\InsertAllProduct</item>
+                <item name="qbd_insert_customer" xsi:type="object">Magenest\QuickBooksDesktop\Console\Command\InsertAllCustomer</item>
+                <item name="qbd_insert_order" xsi:type="object">Magenest\QuickBooksDesktop\Console\Command\InsertAllOrder</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Magenest\QuickBooksDesktop\WebConnector\DataResponse\ReceiveResponseXML">
+        <arguments>
+            <argument name="qbLogger" xsi:type="object">Magenest\QuickBooksDesktop\Helper\QuickbooksLogger\Proxy</argument>
+        </arguments>
+    </type>
+    <type name="Magenest\QuickBooksDesktop\WebConnector\DataResponse\AbstractQueryReceiveResponseXML">
+        <arguments>
+            <argument name="qbLogger" xsi:type="object">Magenest\QuickBooksDesktop\Helper\QuickbooksLogger\Proxy</argument>
+        </arguments>
+    </type>
+    <type name="Magenest\QuickBooksDesktop\WebConnector\DataResponse\Tax\QueryReceiveResponseXML">
+        <arguments>
+            <argument name="qbLogger" xsi:type="object">Magenest\QuickBooksDesktop\Helper\QuickbooksLogger\Proxy</argument>
+        </arguments>
+    </type>
+    <type name="Magenest\QuickBooksDesktop\WebConnector\DataResponse\Queue\AbstractQueueAddReceiveResponseXML">
+        <arguments>
+            <argument name="qbLogger" xsi:type="object">Magenest\QuickBooksDesktop\Helper\QuickbooksLogger\Proxy</argument>
+        </arguments>
+    </type>
+    <type name="Magenest\QuickBooksDesktop\WebConnector\DataResponse\Queue\Sales\InvoiceAdd\ReceiveResponseXML">
+        <arguments>
+            <argument name="qbLogger" xsi:type="object">Magenest\QuickBooksDesktop\Helper\QuickbooksLogger\Proxy</argument>
+        </arguments>
+    </type>
+    <type name="Magenest\QuickBooksDesktop\WebConnector\DataResponse\Queue\Sales\CreditMemoAdd\ReceiveResponseXML">
+        <arguments>
+            <argument name="qbLogger" xsi:type="object">Magenest\QuickBooksDesktop\Helper\QuickbooksLogger\Proxy</argument>
+        </arguments>
+    </type>
+    <type name="Magenest\QuickBooksDesktop\WebConnector\DataResponse\Queue\Sales\SalesOrderAdd\ReceiveResponseXML">
+        <arguments>
+            <argument name="qbLogger" xsi:type="object">Magenest\QuickBooksDesktop\Helper\QuickbooksLogger\Proxy</argument>
+        </arguments>
+    </type>
+    <type name="Magenest\QuickBooksDesktop\WebConnector\DataResponse\Queue\Sales\ReceivePaymentAdd\ReceiveResponseXML">
+        <arguments>
+            <argument name="qbLogger" xsi:type="object">Magenest\QuickBooksDesktop\Helper\QuickbooksLogger\Proxy</argument>
+        </arguments>
+    </type>
+    <type name="Magenest\QuickBooksDesktop\WebConnector\DataResponse\Queue\Product\ProductAddReceiveResponseXML">
+        <arguments>
+            <argument name="qbLogger" xsi:type="object">Magenest\QuickBooksDesktop\Helper\QuickbooksLogger\Proxy</argument>
+        </arguments>
+    </type>
+    <type name="Magenest\QuickBooksDesktop\WebConnector\DataResponse\Queue\Customer\CustomerAdd\ReceiveResponseXML">
+        <arguments>
+            <argument name="qbLogger" xsi:type="object">Magenest\QuickBooksDesktop\Helper\QuickbooksLogger\Proxy</argument>
+        </arguments>
+    </type>
+    <type name="Magenest\QuickBooksDesktop\WebConnector\DataResponse\Queue\ItemDiscount\ItemDiscountAdd\ReceiveResponseXML">
+        <arguments>
+            <argument name="qbLogger" xsi:type="object">Magenest\QuickBooksDesktop\Helper\QuickbooksLogger\Proxy</argument>
+        </arguments>
+    </type>
+    <type name="Magenest\QuickBooksDesktop\WebConnector\DataResponse\Queue\PaymentMethod\PaymentMethodAdd\ReceiveResponseXML">
+        <arguments>
+            <argument name="qbLogger" xsi:type="object">Magenest\QuickBooksDesktop\Helper\QuickbooksLogger\Proxy</argument>
+        </arguments>
+    </type>
+    <type name="Magenest\QuickBooksDesktop\WebConnector\DataResponse\Queue\ShippingMethod\ShipMethodAdd\ReceiveResponseXML">
+        <arguments>
+            <argument name="qbLogger" xsi:type="object">Magenest\QuickBooksDesktop\Helper\QuickbooksLogger\Proxy</argument>
+        </arguments>
+    </type>
+    <type name="Magenest\QuickBooksDesktop\WebConnector\DataResponse\Queue\ShippingMethod\ItemOtherChargeAdd\ReceiveResponseXML">
+        <arguments>
+            <argument name="qbLogger" xsi:type="object">Magenest\QuickBooksDesktop\Helper\QuickbooksLogger\Proxy</argument>
+        </arguments>
+    </type>
+    <type name="Magenest\QuickBooksDesktop\WebConnector\DataResponse\Company\ReceiveResponseXML">
+        <arguments>
+            <argument name="qbLogger" xsi:type="object">Magenest\QuickBooksDesktop\Helper\QuickbooksLogger\Proxy</argument>
+        </arguments>
+    </type>
+
+    <type name="Magenest\QuickBooksDesktop\WebConnector\DataResponse\SendRequestXML">
+        <arguments>
+            <argument name="qbLogger" xsi:type="object">Magenest\QuickBooksDesktop\Helper\QuickbooksLogger\Proxy</argument>
+        </arguments>
+    </type>
+    <type name="Magenest\QuickBooksDesktop\WebConnector\DataResponse\AbstractQuerySendRequestXML">
+        <arguments>
+            <argument name="qbLogger" xsi:type="object">Magenest\QuickBooksDesktop\Helper\QuickbooksLogger\Proxy</argument>
+        </arguments>
+    </type>
+    <type name="Magenest\QuickBooksDesktop\WebConnector\DataResponse\Tax\QuerySendRequestXML">
+        <arguments>
+            <argument name="qbLogger" xsi:type="object">Magenest\QuickBooksDesktop\Helper\QuickbooksLogger\Proxy</argument>
+        </arguments>
+    </type>
+    <type name="Magenest\QuickBooksDesktop\WebConnector\DataResponse\Queue\AbstractQueueAddSendRequestXML">
+        <arguments>
+            <argument name="qbLogger" xsi:type="object">Magenest\QuickBooksDesktop\Helper\QuickbooksLogger\Proxy</argument>
+        </arguments>
+    </type>
+    <type name="Magenest\QuickBooksDesktop\WebConnector\DataResponse\Queue\Sales\AbstractSalesAddSendRequestXML">
+        <arguments>
+            <argument name="qbLogger" xsi:type="object">Magenest\QuickBooksDesktop\Helper\QuickbooksLogger\Proxy</argument>
+        </arguments>
+    </type>
+    <type name="Magenest\QuickBooksDesktop\WebConnector\DataResponse\Queue\Sales\InvoiceAdd\SendRequestXML">
+        <arguments>
+            <argument name="qbLogger" xsi:type="object">Magenest\QuickBooksDesktop\Helper\QuickbooksLogger\Proxy</argument>
+        </arguments>
+    </type>
+    <type name="Magenest\QuickBooksDesktop\WebConnector\DataResponse\Queue\Sales\ReceivePaymentAdd\SendRequestXML">
+        <arguments>
+            <argument name="qbLogger" xsi:type="object">Magenest\QuickBooksDesktop\Helper\QuickbooksLogger\Proxy</argument>
+        </arguments>
+    </type>
+    <type name="Magenest\QuickBooksDesktop\WebConnector\DataResponse\Queue\Sales\CreditMemoAdd\SendRequestXML">
+        <arguments>
+            <argument name="qbLogger" xsi:type="object">Magenest\QuickBooksDesktop\Helper\QuickbooksLogger\Proxy</argument>
+        </arguments>
+    </type>
+    <type name="Magenest\QuickBooksDesktop\WebConnector\DataResponse\Queue\Sales\SalesOrderAdd\SendRequestXML">
+        <arguments>
+            <argument name="qbLogger" xsi:type="object">Magenest\QuickBooksDesktop\Helper\QuickbooksLogger\Proxy</argument>
+        </arguments>
+    </type>
+    <type name="Magenest\QuickBooksDesktop\WebConnector\DataResponse\Queue\Product\ProductAddSendRequestXML">
+        <arguments>
+            <argument name="qbLogger" xsi:type="object">Magenest\QuickBooksDesktop\Helper\QuickbooksLogger\Proxy</argument>
+        </arguments>
+    </type>
+    <type name="Magenest\QuickBooksDesktop\WebConnector\DataResponse\Queue\Customer\CustomerAdd\SendRequestXML">
+        <arguments>
+            <argument name="qbLogger" xsi:type="object">Magenest\QuickBooksDesktop\Helper\QuickbooksLogger\Proxy</argument>
+        </arguments>
+    </type>
+    <type name="Magenest\QuickBooksDesktop\WebConnector\DataResponse\Queue\ItemDiscount\ItemDiscountAdd\SendRequestXML">
+        <arguments>
+            <argument name="qbLogger" xsi:type="object">Magenest\QuickBooksDesktop\Helper\QuickbooksLogger\Proxy</argument>
+        </arguments>
+    </type>
+    <type name="Magenest\QuickBooksDesktop\WebConnector\DataResponse\Queue\PaymentMethod\PaymentMethodAdd\SendRequestXML">
+        <arguments>
+            <argument name="qbLogger" xsi:type="object">Magenest\QuickBooksDesktop\Helper\QuickbooksLogger\Proxy</argument>
+        </arguments>
+    </type>
+    <type name="Magenest\QuickBooksDesktop\WebConnector\DataResponse\Queue\ShippingMethod\ShipMethodAdd\SendRequestXML">
+        <arguments>
+            <argument name="qbLogger" xsi:type="object">Magenest\QuickBooksDesktop\Helper\QuickbooksLogger\Proxy</argument>
+        </arguments>
+    </type>
+    <type name="Magenest\QuickBooksDesktop\WebConnector\DataResponse\Queue\ShippingMethod\ItemOtherChargeAdd\SendRequestXML">
+        <arguments>
+            <argument name="qbLogger" xsi:type="object">Magenest\QuickBooksDesktop\Helper\QuickbooksLogger\Proxy</argument>
+        </arguments>
+    </type>
+    <type name="Magenest\QuickBooksDesktop\WebConnector\DataResponse\Company\SendRequestXML">
+        <arguments>
+            <argument name="qbLogger" xsi:type="object">Magenest\QuickBooksDesktop\Helper\QuickbooksLogger\Proxy</argument>
+        </arguments>
+    </type>
+</config>
